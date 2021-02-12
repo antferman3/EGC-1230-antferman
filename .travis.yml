@@ -5,18 +5,21 @@ services:
 addons:
   postgresql: "9.4"
 before_script:
-  - psql -U postgres -c "create user decide1530 password 'decide1530'"
-  - psql -U postgres -c "create database decide130 owner decide1530"
-  - psql -U postgres -c "ALTER USER decide1530 CREATEDB"
+  - psql -U postgres -c "create user decide123 password 'decide123'"
+  - psql -U postgres -c "create database decide123 owner decide123"
+  - psql -U postgres -c "ALTER USER decide123 CREATEDB"
 language: python
 python:
-  - "3.7"
+  - "3.6"
+  - "3.8"
 install:
   - pip install -r requirements.txt
   - pip install codacy-coverage
 script:
   - cd decide
-  - coverage run --branch --source=. ./manage.py test census --keepdb 
+  - coverage run --branch --source=. ./manage.py test --keepdb 
   - coverage xml
   - python-codacy-coverage -r coverage.xml
-
+branches:
+  only:
+    - desarrollo
